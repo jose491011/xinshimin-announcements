@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
+import PdfUploader from '@/components/admin/PdfUploader';
 import { Announcement, ALL_CATEGORIES, ALL_STATUSES, AnnouncementCategory, AnnouncementStatus } from '@/data/mockData';
 
 export default function EditAnnouncementClient({ ann }: { ann: Announcement }) {
@@ -43,7 +44,7 @@ export default function EditAnnouncementClient({ ann }: { ann: Announcement }) {
 
         {saved && (
           <div className="mb-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm px-4 py-3 rounded-xl">
-            ✅ 已模擬儲存（Prototype 版本，串接 Supabase 後將真實寫入）
+            ✅ 已模擬儲存（Prototype 版本）
           </div>
         )}
 
@@ -53,11 +54,13 @@ export default function EditAnnouncementClient({ ann }: { ann: Announcement }) {
             <input type="text" value={form.notice_number} onChange={(e) => handleChange('notice_number', e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
           </div>
+
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-gray-700">公告標題 <span className="text-red-400">*</span></label>
             <input type="text" required value={form.title} onChange={(e) => handleChange('title', e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
           </div>
+
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-semibold text-gray-700">分類</label>
@@ -74,38 +77,48 @@ export default function EditAnnouncementClient({ ann }: { ann: Announcement }) {
               </select>
             </div>
           </div>
+
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-gray-700">發布日期</label>
             <input type="date" value={form.published_date} onChange={(e) => handleChange('published_date', e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
           </div>
+
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-gray-700">公告摘要 <span className="text-red-400">*</span></label>
             <textarea required rows={4} value={form.summary} onChange={(e) => handleChange('summary', e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none" />
           </div>
+
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-semibold text-gray-700">PDF 連結</label>
-            <input type="text" value={form.pdf_url} onChange={(e) => handleChange('pdf_url', e.target.value)}
-              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
+            <label className="text-sm font-semibold text-gray-700">PDF 公告文件</label>
+            <PdfUploader
+              currentUrl={form.pdf_url}
+              onChange={(url) => handleChange('pdf_url', url)}
+            />
           </div>
+
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-gray-700">關鍵字（逗號分隔）</label>
             <input type="text" value={form.keywords} onChange={(e) => handleChange('keywords', e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400" />
           </div>
+
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-gray-700">下一步</label>
             <textarea rows={2} value={form.next_step} onChange={(e) => handleChange('next_step', e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none" />
           </div>
+
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-semibold text-gray-700">完成紀錄</label>
             <textarea rows={2} value={form.completion_record} onChange={(e) => handleChange('completion_record', e.target.value)}
               className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none" />
           </div>
+
           <div className="flex gap-3 pt-2">
-            <button type="submit" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl text-sm font-semibold transition-colors">
+            <button type="submit"
+              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl text-sm font-semibold transition-colors">
               儲存變更
             </button>
             <Link href="/admin/announcements" className="flex-1">

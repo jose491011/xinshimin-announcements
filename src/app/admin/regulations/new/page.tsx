@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
+import PdfUploader from '@/components/admin/PdfUploader';
 import { ALL_REGULATION_TAGS, RegulationTag } from '@/data/mockData';
 
 export default function NewRegulationPage() {
@@ -74,11 +75,11 @@ export default function NewRegulationPage() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-semibold text-gray-700">PDF 連結</label>
-            <input type="text" value={form.pdf_url} onChange={(e) => handleChange('pdf_url', e.target.value)}
-              placeholder="/sample/regulation.pdf 或 https://..."
-              className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
-            <p className="text-xs text-gray-400">串接 Supabase Storage 後可直接上傳 PDF 檔案</p>
+            <label className="text-sm font-semibold text-gray-700">PDF 文件</label>
+            <PdfUploader
+              currentUrl={form.pdf_url}
+              onChange={(url) => handleChange('pdf_url', url)}
+            />
           </div>
 
           <div className="flex gap-3 pt-2">
