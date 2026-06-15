@@ -24,7 +24,7 @@ export default function HomePage() {
 
   return (
     <Layout>
-      {/* ===== Header ===== */}
+      {/* Header */}
       <header className="bg-white/90 backdrop-blur-sm border-b border-amber-100 px-4 py-3 flex items-center justify-between sticky top-0 z-40 shadow-sm">
         <div className="flex flex-col">
           <span className="text-base font-bold text-amber-900 leading-tight">台北新市民公寓大廈</span>
@@ -62,7 +62,7 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ===== Hero：水彩背景 + 文字 ===== */}
+      {/* Hero */}
       <section className="relative overflow-hidden" style={{ height: 220 }}>
         <Image
           src="/images/hero-bg.png"
@@ -73,9 +73,7 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-amber-50/85 via-amber-50/55 to-transparent" />
         <div className="absolute inset-0 flex flex-col justify-center px-5 pb-4">
-          <p className="text-xs font-semibold text-amber-600 tracking-widest mb-1.5">
-            台北新市民公寓大廈
-          </p>
+          <p className="text-xs font-semibold text-amber-600 tracking-widest mb-1.5">台北新市民公寓大廈</p>
           <h1 className="text-2xl font-bold text-amber-900 leading-tight">
             用心經營・<span className="text-orange-500">安心生活</span>
           </h1>
@@ -83,29 +81,28 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 搜尋框 ===== */}
+      {/* 搜尋框 */}
       <div className="px-4 -mt-3 relative z-10 mb-1">
         <div className="bg-white rounded-2xl shadow-md px-3 py-2.5 border border-amber-100">
           <SearchBar />
         </div>
       </div>
 
-      {/* ===== 功能入口：3欄 × 2列，透明圖示 + 白底圓角卡片 ===== */}
+      {/* 功能入口：圖示自帶米色圓角卡片，去除外框純白背景 */}
       <section className="px-4 mt-4">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-2">
           {CATEGORY_ITEMS.map((item) => (
             <Link key={item.label} href={item.href}>
-              <div className="bg-white rounded-2xl border border-amber-100 flex flex-col items-center justify-center pt-4 pb-3 gap-2 min-h-[96px] hover:border-orange-200 hover:shadow-sm active:scale-95 transition-all shadow-sm">
-                {/* 圖示：透明背景，直接顯示 */}
-                <div className="relative w-[52px] h-[52px]">
+              <div className="flex flex-col items-center justify-center gap-1.5 py-1 active:scale-95 transition-all cursor-pointer">
+                <div className="relative w-[100px] h-[100px]">
                   <Image
                     src={item.icon}
                     alt={item.label}
                     fill
-                    className="object-contain drop-shadow-sm"
+                    className="object-contain"
                   />
                 </div>
-                <span className="text-xs font-semibold text-amber-800 text-center leading-tight px-1">
+                <span className="text-xs font-semibold text-amber-800 text-center leading-tight">
                   {item.label}
                 </span>
               </div>
@@ -114,8 +111,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 工作進程預覽 ===== */}
-      <section className="px-4 mt-5">
+      {/* 工作進程預覽 */}
+      <section className="px-4 mt-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-base font-bold text-amber-900 flex items-center gap-2">
             <span className="w-1 h-5 bg-orange-400 rounded-full inline-block" />
@@ -132,7 +129,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 最新公告 ===== */}
+      {/* 最新公告 */}
       <section className="px-4 mt-5 mb-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-base font-bold text-amber-900 flex items-center gap-2">
