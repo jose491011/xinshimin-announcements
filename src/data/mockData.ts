@@ -238,3 +238,75 @@ export const ALL_STATUSES: AnnouncementStatus[] = [
   '已結案',
   '已撤回',
 ];
+
+// ============================================================
+// 規約辦法 Regulation
+// ============================================================
+
+export type RegulationTag = '規約' | '管理辦法' | '財務辦法' | '會議規則' | '其他';
+
+export interface Regulation {
+  id: string;
+  title: string;
+  description: string;
+  tag: RegulationTag;
+  updated: string; // YYYY/MM/DD
+  pdf_url: string;
+}
+
+export const regulations: Regulation[] = [
+  {
+    id: 'reg-001',
+    title: '台北新市民公寓大廈規約',
+    description: '社區管理規約全文，包含區權人權利義務、管委會組織等規定。',
+    tag: '規約',
+    updated: '2026/01/01',
+    pdf_url: '/sample/community-regulation.pdf',
+  },
+  {
+    id: 'reg-002',
+    title: '停車位管理辦法',
+    description: '社區停車位分配、抽籤、租借及使用規範。',
+    tag: '管理辦法',
+    updated: '2026/03/15',
+    pdf_url: '/sample/parking-regulation.pdf',
+  },
+  {
+    id: 'reg-003',
+    title: '公共設施使用辦法',
+    description: '社區公共空間、設施使用規定及申請程序。',
+    tag: '管理辦法',
+    updated: '2026/03/15',
+    pdf_url: '/sample/facility-regulation.pdf',
+  },
+  {
+    id: 'reg-004',
+    title: '住戶遷入遷出管理辦法',
+    description: '住戶搬遷作業程序、押金繳交及公共設施保護規定。',
+    tag: '管理辦法',
+    updated: '2026/03/15',
+    pdf_url: '/sample/moving-regulation.pdf',
+  },
+  {
+    id: 'reg-005',
+    title: '管理費收繳辦法',
+    description: '管理費金額、繳費期限、逾期處理及減免申請規定。',
+    tag: '財務辦法',
+    updated: '2026/01/01',
+    pdf_url: '/sample/fee-regulation.pdf',
+  },
+  {
+    id: 'reg-006',
+    title: '區分所有權人會議規則',
+    description: '區權人會議召開程序、出席委託、表決方式等規定。',
+    tag: '會議規則',
+    updated: '2026/01/01',
+    pdf_url: '/sample/meeting-regulation.pdf',
+  },
+];
+
+export const ALL_REGULATION_TAGS: RegulationTag[] = ['規約', '管理辦法', '財務辦法', '會議規則', '其他'];
+
+export function getRegulationById(id: string): Regulation | undefined {
+  return regulations.find((r) => r.id === id);
+}

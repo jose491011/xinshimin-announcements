@@ -16,7 +16,7 @@ const CATEGORY_ITEMS = [
   { icon: '/images/icons/icon-status.png',        label: '公告狀態', href: '/status'        },
   { icon: '/images/icons/icon-history.png',       label: '歷史公告', href: '/history'       },
   { icon: '/images/icons/icon-progress.png',      label: '工作進程', href: '/progress'      },
-  { icon: '/images/icons/icon-contact.png',       label: '聯絡我們', href: '#'              },
+  { icon: '/images/icons/icon-contact.png',       label: '規約辦法', href: '/regulations'   },
 ];
 
 export default function HomePage() {

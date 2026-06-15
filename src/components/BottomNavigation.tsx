@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV_ITEMS = [
-  { href: '/',           icon: '🏠', label: '首頁'   },
-  { href: '/categories', icon: '📂', label: '分類'   },
-  { href: '/search',     icon: '🔍', label: '搜尋'   },
-  { href: '/history',    icon: '📅', label: '歷史'   },
-  { href: '/progress',   icon: '📊', label: '進程'   },
+  { href: '/',             icon: '🏠', label: '首頁'   },
+  { href: '/categories',   icon: '📂', label: '分類'   },
+  { href: '/search',       icon: '🔍', label: '搜尋'   },
+  { href: '/progress',     icon: '📊', label: '進程'   },
+  { href: '/regulations',  icon: '📜', label: '規約'   },
 ];
 
 export default function BottomNavigation() {
@@ -31,7 +31,6 @@ export default function BottomNavigation() {
                   active ? 'text-orange-500' : 'text-amber-400'
                 }`}
               >
-                {/* 活躍底色 */}
                 {active && (
                   <span className="absolute inset-1 bg-orange-50 rounded-xl" />
                 )}

@@ -1,21 +1,44 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 const NAV_ITEMS = [
-  { href: '/admin', label: '後台首頁', icon: '🏠', exact: true },
-  { href: '/admin/announcements', label: '公告管理', icon: '📋', exact: false },
-  { href: '/admin/progress', label: '工作進程管理', icon: '📊', exact: false },
+  { href: '/admin',               label: '後台首頁',    icon: '🏠', exact: true  },
+  { href: '/admin/announcements', label: '公告管理',    icon: '📋', exact: false },
+  { href: '/admin/progress',      label: '工作進程管理', icon: '📊', exact: false },
+  { href: '/admin/regulations',   label: '規約辦法管理', icon: '📜', exact: false },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [authed, setAuthed] = useState(false);
+
+  useEffect(() => {
+    const isAuth = sessionStorage.getItem('admin_auth') === 'true';
+    if (!isAuth) {
+      router.push('/admin/login');
+    } else {
+      setAuthed(true);
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('admin_auth');
+    router.push('/admin/login');
+  };
 
   const isActive = (href: string, exact: boolean) =>
     exact ? pathname === href : pathname.startsWith(href);
+
+  if (!authed) return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <p className="text-gray-400 text-sm">驗證中...</p>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -37,27 +60,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </div>
         <div className="ml-auto flex items-center gap-3">
-          <Link
-            href="/"
-            target="_blank"
-            className="text-xs text-amber-300 hover:text-white flex items-center gap-1 transition-colors"
-          >
-            <span>🔗</span>
-            <span>前台預覽</span>
+          <Link href="/" target="_blank"
+            className="text-xs text-amber-300 hover:text-white flex items-center gap-1 transition-colors">
+            <span>🔗</span><span>前台預覽</span>
           </Link>
-          <span className="text-xs text-amber-400 bg-amber-800 px-2 py-1 rounded-full">
-            Prototype v1.0
-          </span>
+          <button onClick={handleLogout}
+            className="text-xs text-amber-300 hover:text-white flex items-center gap-1 transition-colors">
+            <span>🚪</span><span>登出</span>
+          </button>
         </div>
       </header>
 
       <div className="flex flex-1">
         {/* Sidebar */}
-        <aside
-          className={`bg-white border-r border-gray-200 transition-all duration-200 flex-shrink-0 ${
-            sidebarOpen ? 'w-56' : 'w-0 overflow-hidden'
-          }`}
-        >
+        <aside className={`bg-white border-r border-gray-200 transition-all duration-200 flex-shrink-0 ${sidebarOpen ? 'w-56' : 'w-0 overflow-hidden'}`}>
           <nav className="py-4">
             <div className="px-4 mb-2">
               <span className="text-xs font-bold text-gray-400 tracking-widest uppercase">選單</span>
@@ -65,21 +81,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {NAV_ITEMS.map((item) => {
               const active = isActive(item.href, item.exact);
               return (
-                <Link
-                  key={item.href}
-                  href={item.href}
+                <Link key={item.href} href={item.href}
                   className={`flex items-center gap-3 px-4 py-3 text-sm font-medium transition-colors ${
-                    active
-                      ? 'bg-amber-50 text-amber-900 border-r-2 border-amber-600'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-                >
+                    active ? 'bg-amber-50 text-amber-900 border-r-2 border-amber-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }`}>
                   <span className="text-base">{item.icon}</span>
                   <span>{item.label}</span>
                 </Link>
               );
             })}
-
             <div className="px-4 mt-6 mb-2">
               <span className="text-xs font-bold text-gray-400 tracking-widest uppercase">說明</span>
             </div>
@@ -91,9 +101,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 p-6 overflow-auto">
-          {children}
-        </main>
+        <main className="flex-1 p-6 overflow-auto">{children}</main>
       </div>
     </div>
   );
